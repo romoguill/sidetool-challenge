@@ -1,5 +1,5 @@
 import { hc } from 'hono/client';
-import { AppRouter } from '@/server/router';
+import { type AppRouter } from '@/server/router';
 
 const apiClient = hc<AppRouter>(process.env.NEXT_PUBLIC_API_URL!, {
   fetch: async (input: RequestInfo | URL, init?: RequestInit) => {

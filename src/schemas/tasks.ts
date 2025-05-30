@@ -28,14 +28,9 @@ export type TaskToDTO<T extends Task> = Omit<T, 'createdAt' | 'updatedAt'> & {
 
 export const createTaskSchema = z.object({
   title: z.string().trim().min(1).max(50),
-  description: z.string().trim().max(255).nullable().optional(),
-});
-
-export const updateTaskSchema = z.object({
-  title: z.string().trim().min(1).max(50).optional(),
-  description: z.string().trim().max(255).nullable().optional(),
+  description: z.string().trim().max(255).nullish(),
   completed: z.boolean().optional(),
 });
 
 export type CreateTask = z.infer<typeof createTaskSchema>;
-export type UpdateTask = z.infer<typeof updateTaskSchema>;
+export type UpdateTask = Partial<CreateTask>;

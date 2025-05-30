@@ -11,12 +11,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { CreateTask, createTaskSchema } from '@/schemas/tasks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useCreateTask } from '../api/mutations';
 import { toast } from 'sonner';
-import { ActionText } from '../../../components/global/action-text';
+import { ActionText } from '@/components/global/action-text';
+import { useCreateTask } from '../api/mutations';
+import { CreateTask, createTaskSchema } from '@/schemas/tasks';
 
 export function TasksForm() {
   const { mutate: createTask, isPending } = useCreateTask();
@@ -25,6 +25,7 @@ export function TasksForm() {
     defaultValues: {
       title: '',
       description: '',
+      completed: false,
     },
   });
 
@@ -34,7 +35,7 @@ export function TasksForm() {
         toast.error(error.message);
       },
       onSuccess: () => {
-        toast.success('Task created successfully');
+        toast.success('Tarea creada correctamente');
         form.reset();
       },
     });
