@@ -8,7 +8,7 @@ interface FormWrapperProps {
 
 export function FormWrapper({ children, title }: FormWrapperProps) {
   return (
-    <section className="mx-auto my-32 max-w-xl space-y-8">
+    <main className="mx-auto my-32 max-w-xl space-y-8">
       <Link
         href="/home"
         className="group text-muted-foreground flex items-center gap-2 hover:underline"
@@ -18,6 +18,6 @@ export function FormWrapper({ children, title }: FormWrapperProps) {
       </Link>
       <h2 className="text-2xl font-bold">{title}</h2>
       {children}
-    </section>
+    </main>
   );
 }

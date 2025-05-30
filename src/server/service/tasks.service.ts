@@ -1,12 +1,14 @@
-import { eq } from 'drizzle-orm';
-import { CreateTask, Task, UpdateTask } from '../../schemas/tasks';
-import { db } from '../../db';
-import { tasksTable } from '../../db/schema';
-import { HTTPException } from 'hono/http-exception';
+import { desc, eq } from "drizzle-orm";
+import { CreateTask, Task, UpdateTask } from "../../schemas/tasks";
+import { db } from "../../db";
+import { tasksTable } from "../../db/schema";
+import { HTTPException } from "hono/http-exception";
 
 export class TaskService {
   async getTasks(): Promise<Task[]> {
-    const tasks = await db.query.tasksTable.findMany();
+    const tasks = await db.query.tasksTable.findMany({
+      orderBy: [desc(tasksTable.createdAt)],
+    });
 
     return tasks;
   }
@@ -18,7 +20,7 @@ export class TaskService {
 
     if (!task) {
       throw new HTTPException(404, {
-        message: 'Task not found',
+        message: "Task not found",
       });
     }
 
@@ -37,7 +39,7 @@ export class TaskService {
 
     if (!createdTasks[0]) {
       throw new HTTPException(500, {
-        message: 'Failed to create task',
+        message: "Failed to create task",
       });
     }
 
@@ -53,7 +55,7 @@ export class TaskService {
 
     if (!updatedTasks[0]) {
       throw new HTTPException(404, {
-        message: 'Task not found',
+        message: "Task not found",
       });
     }
 
@@ -68,7 +70,7 @@ export class TaskService {
 
     if (!deletedTasks[0]) {
       throw new HTTPException(404, {
-        message: 'Task not found',
+        message: "Task not found",
       });
     }
 

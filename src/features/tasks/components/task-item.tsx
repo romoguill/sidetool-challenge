@@ -12,6 +12,7 @@ import { EditIcon, MoreHorizontalIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useDeleteTask, useUpdateTask } from "../api/mutations";
 import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "../../../lib/utils";
 
 interface TaskItemProps {
   task: TaskDTO;
@@ -24,13 +25,17 @@ export function TaskItem({ task }: TaskItemProps) {
   console.log(task);
 
   return (
-    <div className="flex flex-col justify-between rounded-md border border-slate-200 p-4">
+    <div
+      className={cn(
+        "bg-background flex flex-col justify-between rounded-md border p-4",
+        task.completed && "stripes",
+      )}
+    >
       <div className="flex items-center">
         <Checkbox
-          className="mr-2 size-5"
+          className="mr-2 size-5 data-[state=checked]:border-emerald-600 data-[state=checked]:bg-emerald-500"
           checked={task.completed}
           onCheckedChange={(checked) => {
-            console.log(checked);
             updateTask({
               id: task.id.toString(),
               task: { completed: Boolean(checked.valueOf()) },
