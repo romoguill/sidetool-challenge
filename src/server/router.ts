@@ -32,4 +32,5 @@ const app = new Hono()
     return c.json(toTaskDTO(task));
   });
 
+export type AppRouter = typeof app;
 export default app;
