@@ -10,7 +10,8 @@ import {
 import { TaskDTO } from "@/schemas/tasks";
 import { EditIcon, MoreHorizontalIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
-import { useDeleteTask } from "../api/mutations";
+import { useDeleteTask, useUpdateTask } from "../api/mutations";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface TaskItemProps {
   task: TaskDTO;
@@ -18,12 +19,26 @@ interface TaskItemProps {
 
 export function TaskItem({ task }: TaskItemProps) {
   const { mutate: deleteTask } = useDeleteTask();
+  const { mutate: updateTask } = useUpdateTask();
+
+  console.log(task);
 
   return (
     <div className="flex flex-col justify-between rounded-md border border-slate-200 p-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center">
+        <Checkbox
+          className="mr-2 size-5"
+          checked={task.completed}
+          onCheckedChange={(checked) => {
+            console.log(checked);
+            updateTask({
+              id: task.id.toString(),
+              task: { completed: Boolean(checked.valueOf()) },
+            });
+          }}
+        />
         <h2 className="text-lg font-bold">{task.title}</h2>
-        <div className="flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost">
@@ -51,7 +66,7 @@ export function TaskItem({ task }: TaskItemProps) {
           </DropdownMenu>
         </div>
       </div>
-      <p className="text-muted-foreground text-sm">{task.description}</p>
+      <p className="text-muted-foreground ml-7 text-sm">{task.description}</p>
     </div>
   );
 }

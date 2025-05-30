@@ -9,7 +9,7 @@ async function EditTaskPage({ params }: { params: Params }) {
   const { taskId } = await params;
 
   const queryClient = getQueryClient();
-  await queryClient.prefetchQuery(taskQueryOptions(Number(taskId)));
+  await queryClient.prefetchQuery(taskQueryOptions(taskId));
 
   return (
     <FormWrapper title="Editar">

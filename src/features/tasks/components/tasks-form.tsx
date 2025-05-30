@@ -27,7 +27,7 @@ interface TasksFormProps {
 export function TasksForm({ taskId }: TasksFormProps) {
   const { mutate: createTask, isPending: isCreating } = useCreateTask();
   const { mutate: updateTask, isPending: isUpdating } = useUpdateTask();
-  const { data: task } = useSuspenseQuery(taskQueryOptions(Number(taskId)));
+  const { data: task } = useSuspenseQuery(taskQueryOptions(taskId));
 
   const form = useForm<CreateTask>({
     resolver: zodResolver(createTaskSchema),
