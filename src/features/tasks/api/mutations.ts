@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import apiClient from '@/lib/api-client';
-import { CreateTask } from '../../schemas/tasks';
+import { CreateTask } from '../../../schemas/tasks';
 import { useQueryClient } from '@tanstack/react-query';
 import { tasksKeys } from './query-keys';
 
