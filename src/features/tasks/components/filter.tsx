@@ -7,8 +7,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { FilterIcon } from "lucide-react";
+import { TaskFilter } from "@/schemas/queries";
 
-export function Filter({ className }: { className?: string }) {
+interface FilterProps {
+  className?: string;
+  onFilterChange: (filter: TaskFilter) => void;
+}
+
+export function Filter({ className, onFilterChange }: FilterProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -17,10 +23,20 @@ export function Filter({ className }: { className?: string }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>Todas</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onFilterChange({})}>
+          Todas
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Completadas</DropdownMenuItem>
-        <DropdownMenuItem>Incompletas</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => onFilterChange({ status: "completed" })}
+        >
+          Completadas
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => onFilterChange({ status: "incomplete" })}
+        >
+          Incompletas
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

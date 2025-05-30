@@ -6,7 +6,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 async function HomePage() {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(tasksQueryOptions);
+  await queryClient.prefetchQuery(tasksQueryOptions({}));
 
   return (
     <main className="flex h-full w-full items-center justify-center">
