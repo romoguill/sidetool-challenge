@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { createTaskSchema, updateTaskSchema } from "../schemas/tasks";
 import { TaskService } from "./service/tasks.service";
 import { toTaskDTO } from "../utils/to-dto";
+import { taskFilterSchema } from "../schemas/queries";
 
 const taskService = new TaskService();
 
@@ -11,10 +12,16 @@ const app = new Hono()
   .get("/ping", (c) => {
     return c.text("pong");
   })
-  .get("/tasks", async (c) => {
-    const tasks = await taskService.getTasks();
-    return c.json(tasks.map(toTaskDTO));
-  })
+  .get(
+    "/tasks",
+    zValidator("query", taskFilterSchema.optional()),
+    async (c) => {
+      const query = c.req.valid("query");
+
+      const tasks = await taskService.getTasks(query);
+      return c.json(tasks.map(toTaskDTO));
+    },
+  )
   .get("/tasks/:id", async (c) => {
     const id = c.req.param("id");
     const task = await taskService.getTaskById(Number(id));

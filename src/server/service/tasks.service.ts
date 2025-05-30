@@ -3,11 +3,16 @@ import { CreateTask, Task, UpdateTask } from "../../schemas/tasks";
 import { db } from "../../db";
 import { tasksTable } from "../../db/schema";
 import { HTTPException } from "hono/http-exception";
+import { TaskFilter } from "../../schemas/queries";
 
 export class TaskService {
-  async getTasks(): Promise<Task[]> {
+  async getTasks(filter: TaskFilter | undefined): Promise<Task[]> {
+    const statusFilter =
+      filter?.status && eq(tasksTable.completed, filter.status === "completed");
+
     const tasks = await db.query.tasksTable.findMany({
       orderBy: [desc(tasksTable.createdAt)],
+      where: statusFilter,
     });
 
     return tasks;

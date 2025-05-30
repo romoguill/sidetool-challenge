@@ -22,8 +22,6 @@ export function TaskItem({ task }: TaskItemProps) {
   const { mutate: deleteTask } = useDeleteTask();
   const { mutate: updateTask } = useUpdateTask();
 
-  console.log(task);
-
   return (
     <div
       className={cn(
