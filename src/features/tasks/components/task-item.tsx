@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenuTrigger,
@@ -8,12 +10,15 @@ import {
 import { TaskDTO } from "@/schemas/tasks";
 import { EditIcon, MoreHorizontalIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
+import { useDeleteTask } from "../api/mutations";
 
 interface TaskItemProps {
   task: TaskDTO;
 }
 
 export function TaskItem({ task }: TaskItemProps) {
+  const { mutate: deleteTask } = useDeleteTask();
+
   return (
     <div className="flex flex-col justify-between rounded-md border border-slate-200 p-4">
       <div className="flex items-center justify-between">
@@ -35,11 +40,12 @@ export function TaskItem({ task }: TaskItemProps) {
                   Editar
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem variant="destructive">
-                <div className="flex items-center gap-2">
-                  <TrashIcon className="h-4 w-4 stroke-red-500" />
-                  Eliminar
-                </div>
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() => deleteTask(task.id.toString())}
+              >
+                <TrashIcon className="h-4 w-4 stroke-red-500" />
+                Eliminar
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
