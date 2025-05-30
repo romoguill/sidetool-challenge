@@ -1,11 +1,11 @@
-import { TasksForm } from '@/features/tasks/components/tasks-form';
+import { TasksForm } from "@/features/tasks/components/tasks-form";
+import { FormWrapper } from "@/components/global/form-wrapper";
 
 function CreateTaskPage() {
   return (
-    <div>
-      <h1>Create Task</h1>
+    <FormWrapper title="Crear">
       <TasksForm />
-    </div>
+    </FormWrapper>
   );
 }
 
