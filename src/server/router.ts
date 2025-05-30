@@ -26,14 +26,14 @@ const app = new Hono()
     const id = c.req.param('id');
     const payload = c.req.valid('json');
 
-    const task = await taskService.updateTask(id, payload);
+    const task = await taskService.updateTask(Number(id), payload);
 
     return c.json(task);
   })
   .delete('/tasks/:id', async (c) => {
     const id = c.req.param('id');
 
-    await taskService.deleteTask(id);
+    await taskService.deleteTask(Number(id));
 
     return;
   });

@@ -11,7 +11,7 @@ export interface Task {
 
 export const createTaskSchema = z.object({
   title: z.string().trim().min(1).max(50),
-  description: z.string().trim().max(255).nullable(),
+  description: z.string().trim().max(255).nullable().optional(),
   completed: z.boolean().optional().default(false),
 });
 
