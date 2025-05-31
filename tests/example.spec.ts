@@ -1,16 +1,39 @@
 import { test, expect } from "@playwright/test";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL!;
+
 test.describe("Home Page", () => {
   test("should have metadata", async ({ page }) => {
-    await page.goto("http://localhost:3000/");
+    await page.goto(BASE_URL);
     await expect(page).toHaveTitle("Sidetool - Tasks Management App");
   });
 
   test("should display tasks title", async ({ page }) => {
-    await page.goto("http://localhost:3000/home");
+    await page.goto(BASE_URL);
 
-    const taskTitle = await page.getByRole("heading", { name: "Tareas" });
+    const taskTitle = page.getByRole("heading", { name: "Tareas" });
     await expect(taskTitle).toBeVisible();
+  });
+
+  test("display 0/0 tasks", async ({ page }) => {
+    await page.goto(BASE_URL);
+
+    const taskCount = page.getByText("0/0");
+    await expect(taskCount).toBeVisible();
+  });
+
+  test("should display filter options", async ({ page }) => {
+    await page.goto(BASE_URL);
+
+    const filterOptions = page.getByRole("main").getByRole("button");
+    await expect(filterOptions).toBeVisible();
+  });
+
+  test("should display add new task button", async ({ page }) => {
+    await page.goto(BASE_URL);
+
+    const addNewTaskButton = page.getByRole("link");
+    await expect(addNewTaskButton).toBeVisible();
   });
 });
 
