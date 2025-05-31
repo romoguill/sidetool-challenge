@@ -5,6 +5,15 @@ import { FormWrapper } from "@/components/global/form-wrapper";
 
 type Params = Promise<{ taskId: string | undefined }>;
 
+export const generateMetadata = async ({ params }: { params: Params }) => {
+  const { taskId } = await params;
+
+  return {
+    title: "Sidetool - Editar tarea",
+    description: `Editar tarea ${taskId}`,
+  };
+};
+
 async function EditTaskPage({ params }: { params: Params }) {
   const { taskId } = await params;
 
