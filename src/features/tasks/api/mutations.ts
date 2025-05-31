@@ -24,7 +24,45 @@ export const useDeleteTask = () => {
   return useMutation({
     mutationFn: (taskId: string) =>
       apiClient.tasks[":id"].$delete({ param: { id: taskId } }),
-    onSuccess: () => {
+
+    // Optimistic update
+    onMutate: async (taskId: string) => {
+      await queryClient.cancelQueries({
+        queryKey: tasksKeys.all,
+      });
+
+      const previousTasks =
+        queryClient.getQueryData<TaskDTO[]>(tasksKeys.all) || [];
+
+      // Helper function to remove the task from cache
+      const cacheUpdate = (old: TaskDTO[] | undefined) => {
+        if (!old) return [];
+        return old.filter(
+          (existingTask) => existingTask.id.toString() !== taskId,
+        );
+      };
+
+      // Update all task lists with their respective filters
+      queryClient.setQueryData<TaskDTO[]>(tasksKeys.list({}), cacheUpdate);
+
+      // Also update the completed filter
+      queryClient.setQueryData<TaskDTO[]>(
+        tasksKeys.list({ status: "completed" }),
+        cacheUpdate,
+      );
+
+      // And the incomplete filter
+      queryClient.setQueryData<TaskDTO[]>(
+        tasksKeys.list({ status: "incomplete" }),
+        cacheUpdate,
+      );
+
+      return { previousTasks };
+    },
+    onError: (_error, _taskId, context) => {
+      queryClient.setQueryData(tasksKeys.all, context?.previousTasks);
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: tasksKeys.all });
     },
   });
