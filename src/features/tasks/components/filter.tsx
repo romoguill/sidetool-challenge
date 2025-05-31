@@ -6,20 +6,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { FilterIcon } from "lucide-react";
+import { FilterIcon, FunnelPlusIcon } from "lucide-react";
 import { TaskFilter } from "@/schemas/queries";
 
 interface FilterProps {
   className?: string;
   onFilterChange: (filter: TaskFilter) => void;
+  filter: TaskFilter | undefined;
 }
 
-export function Filter({ className, onFilterChange }: FilterProps) {
+export function Filter({ className, onFilterChange, filter }: FilterProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className={className}>
-          <FilterIcon className="h-4 w-4" />
+          {filter?.status ? (
+            <FunnelPlusIcon />
+          ) : (
+            <FilterIcon className="h-4 w-4" />
+          )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

@@ -9,7 +9,7 @@ async function HomePage() {
   await queryClient.prefetchQuery(tasksQueryOptions({}));
 
   return (
-    <main className="flex h-full w-full items-center justify-center">
+    <main className="my-40 flex h-full w-full">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <TasksList />
       </HydrationBoundary>

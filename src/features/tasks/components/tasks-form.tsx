@@ -19,6 +19,7 @@ import { useCreateTask, useUpdateTask } from "../api/mutations";
 import { CreateTask, createTaskSchema } from "@/schemas/tasks";
 import { taskQueryOptions } from "../api/queries";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 interface TasksFormProps {
   taskId?: string;
@@ -28,6 +29,7 @@ export function TasksForm({ taskId }: TasksFormProps) {
   const { mutate: createTask, isPending: isCreating } = useCreateTask();
   const { mutate: updateTask, isPending: isUpdating } = useUpdateTask();
   const { data: task } = useSuspenseQuery(taskQueryOptions(taskId));
+  const router = useRouter();
 
   const form = useForm<CreateTask>({
     resolver: zodResolver(createTaskSchema),
@@ -55,6 +57,7 @@ export function TasksForm({ taskId }: TasksFormProps) {
           },
           onSuccess: () => {
             toast.success("Tarea actualizada correctamente");
+            router.push("/home");
           },
         },
       );

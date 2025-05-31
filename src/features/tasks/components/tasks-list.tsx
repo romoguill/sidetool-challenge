@@ -21,10 +21,16 @@ export function TasksList() {
 
   return (
     <section className="mx-auto w-full border-none md:max-w-xl lg:max-w-2xl">
-      <div className="bg-background mb-6 flex w-full items-center rounded-sm border p-4">
+      <div className="bg-background/30 mb-6 flex w-full items-center rounded-sm border p-4">
         <h1 className="text-2xl font-bold">Tareas</h1>
         <span className="ml-10 text-3xl font-bold">{`${completedTasks}/${totalTasks}`}</span>
-        <Filter className="mr-2 ml-auto" onFilterChange={setFilter} />
+
+        <Filter
+          className="mr-2 ml-auto"
+          onFilterChange={setFilter}
+          filter={filter}
+        />
+
         <Link
           href="/tasks/create"
           className={cn(buttonVariants({ variant: "default" }))}

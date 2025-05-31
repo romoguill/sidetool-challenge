@@ -25,13 +25,13 @@ export function TaskItem({ task }: TaskItemProps) {
   return (
     <div
       className={cn(
-        "bg-background flex flex-col justify-between rounded-md border p-4",
+        "bg-background/30 flex flex-col justify-between rounded-md border p-4",
         task.completed && "stripes",
       )}
     >
       <div className="flex items-center">
         <Checkbox
-          className="mr-2 size-5 data-[state=checked]:border-emerald-600 data-[state=checked]:bg-emerald-500"
+          className="mr-4 size-5 data-[state=checked]:border-emerald-600 data-[state=checked]:bg-emerald-500"
           checked={task.completed}
           onCheckedChange={(checked) => {
             updateTask({
@@ -69,7 +69,7 @@ export function TaskItem({ task }: TaskItemProps) {
           </DropdownMenu>
         </div>
       </div>
-      <p className="text-muted-foreground ml-7 text-sm">{task.description}</p>
+      <p className="text-muted-foreground ml-9 text-sm">{task.description}</p>
     </div>
   );
 }
