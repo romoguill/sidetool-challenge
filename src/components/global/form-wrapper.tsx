@@ -8,7 +8,7 @@ interface FormWrapperProps {
 
 export function FormWrapper({ children, title }: FormWrapperProps) {
   return (
-    <main className="mx-auto my-32 max-w-xl space-y-8">
+    <main className="mx-auto max-w-xl space-y-8 p-4 py-32">
       <Link
         href="/home"
         className="group text-muted-foreground inline-flex items-center gap-2 py-2 pr-2 hover:underline"

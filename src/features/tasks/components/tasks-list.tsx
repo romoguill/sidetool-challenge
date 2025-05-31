@@ -33,11 +33,13 @@ export function TasksList() {
           </h2>
         </div>
 
-        <Filter
-          className="mr-2 ml-auto"
-          onFilterChange={setFilter}
-          filter={filter}
-        />
+        <div className="mr-3 ml-auto flex items-center gap-2">
+          <span className="text-sm italic">
+            {filter.status &&
+              (filter.status === "completed" ? "Completadas" : "Incompletas")}
+          </span>
+          <Filter className="" onFilterChange={setFilter} filter={filter} />
+        </div>
 
         <Link
           href="/tasks/create"

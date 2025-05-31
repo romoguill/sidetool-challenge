@@ -52,7 +52,7 @@ export function TaskItem({ task }: TaskItemProps) {
             });
           }}
         />
-        <h2 className="text-lg font-bold">{task.title}</h2>
+        <h2 className="text-lg font-bold break-all">{task.title}</h2>
         <div className="ml-auto flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -61,12 +61,12 @@ export function TaskItem({ task }: TaskItemProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem asChild>
+              <DropdownMenuItem asChild className="group">
                 <Link
                   href={`/tasks/edit/${task.id}`}
                   className="flex items-center gap-2"
                 >
-                  <EditIcon className="h-4 w-4" />
+                  <EditIcon className="group-hover:stroke-primary h-4 w-4" />
                   Editar
                 </Link>
               </DropdownMenuItem>
@@ -82,7 +82,9 @@ export function TaskItem({ task }: TaskItemProps) {
           </DropdownMenu>
         </div>
       </div>
-      <p className="text-muted-foreground ml-9 text-sm">{task.description}</p>
+      <p className="text-muted-foreground ml-9 text-sm break-all">
+        {task.description}
+      </p>
     </motion.div>
   );
 }

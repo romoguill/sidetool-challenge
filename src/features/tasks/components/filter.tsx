@@ -21,9 +21,9 @@ export function Filter({ className, onFilterChange, filter }: FilterProps) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className={className}>
           {filter?.status ? (
-            <FunnelPlusIcon />
+            <FunnelPlusIcon className="size-6" />
           ) : (
-            <FilterIcon className="h-4 w-4" />
+            <FilterIcon className="size-6" />
           )}
         </Button>
       </DropdownMenuTrigger>

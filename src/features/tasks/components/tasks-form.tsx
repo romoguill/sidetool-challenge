@@ -113,14 +113,18 @@ export function TasksForm({ taskId }: TasksFormProps) {
                 <Textarea
                   {...field}
                   value={field.value ?? ""}
-                  className="min-h-36"
+                  className="min-h-52 sm:min-h-36"
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isCreating || isUpdating}>
+        <Button
+          type="submit"
+          disabled={isCreating || isUpdating}
+          className="block w-full sm:inline-flex sm:w-fit"
+        >
           <ActionText isLoading={isCreating || isUpdating}>
             {taskId ? "Actualizar" : "Crear"}
           </ActionText>
