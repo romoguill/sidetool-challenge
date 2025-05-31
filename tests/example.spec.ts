@@ -149,30 +149,95 @@ test.describe("CRUD operations", () => {
 
   test("should update a task", async ({ page }) => {
     await createTestTasks(page);
+
+    await page.goto(BASE_URL);
+
+    // Wait for the page to load completely
+    await page.waitForLoadState("networkidle");
+
+    // Click menu
+    await page
+      .locator("div")
+      .filter({ hasText: testTasks[0]?.title })
+      .getByRole("button")
+      .first()
+      .click();
+
+    // Click edit
+    await page.getByRole("menuitem", { name: "Editar" }).click();
+
+    // Check the url
+    await expect(page).toHaveURL(new RegExp(`^${BASE_URL}/tasks/edit/\\d+$`));
+
+    // Fill the form
+    await page
+      .getByRole("textbox", { name: "Título" })
+      .fill("Nueva tarea modificada");
+
+    // Click update
+    await page.getByRole("button", { name: "Actualizar" }).click();
+
+    const submitButton = page.getByRole("button", { name: "Actualizar" });
+    await expect(submitButton).toBeEnabled({ timeout: 5000 });
+
+    // Check for toast
+    const toast = page.getByRole("listitem");
+    await expect(toast).toBeVisible();
+    await expect(toast).toHaveText("Tarea actualizada correctamente");
   });
 
   test("should delete a task", async ({ page }) => {
     await createTestTasks(page);
+
+    await page.goto(BASE_URL);
+
+    // Wait for the page to load completely
+    await page.waitForLoadState("networkidle");
+
+    // Click menu
+    await page
+      .locator("div")
+      .filter({ hasText: new RegExp(testTasks[1]!.title) })
+      .getByRole("button")
+      .first()
+      .click();
+
+    // Click edit
+    await page.getByRole("menuitem", { name: "Eliminar" }).click();
+
+    const deletedTask = page.getByText(testTasks[1]!.title, { exact: true });
+
+    // Check the task is not visible
+    await expect(deletedTask).not.toBeVisible({ timeout: 3000 });
+  });
+
+  test("should filter tasks and complete a task", async ({ page }) => {
+    await createTestTasks(page);
+
+    await page.goto(BASE_URL);
+
+    // Wait for the page to load completely
+    await page.waitForLoadState("networkidle");
+
+    // Mark task as completed
+    page
+      .locator("div")
+      .filter({ hasText: new RegExp(`${testTasks[1]!.title}$`) })
+      .getByRole("checkbox")
+      .click();
+
+    // Check if ratio is 1/2
+    const taskCount = page.getByText("1/2", { exact: true });
+    await expect(taskCount).toBeVisible();
+
+    // Click filter
+    await page.getByRole("button").first().click();
+
+    // Click filter
+    await page.getByRole("menuitem", { name: "Completadas" }).click();
+
+    // Check if ratio is 1/1
+    const taskCount2 = page.getByText("1/1");
+    await expect(taskCount2).toBeVisible();
   });
 });
-
-// await page.goto('http://localhost:3000/home');
-//   await page.getByRole('link').click();
-//   await page.getByRole('textbox', { name: 'Título' }).fill('Nueva tarea');
-//   await page.getByRole('textbox', { name: 'Descripción' }).click();
-//   await page.getByRole('textbox', { name: 'Descripción' }).fill('Algo para hacer');
-//   await page.getByRole('button', { name: 'Crear' }).click();
-//   await page.getByRole('link', { name: 'Atrás' }).click();
-//   await page.locator('div').filter({ hasText: /^Nueva tarea$/ }).getByRole('button').click();
-//   await page.getByRole('menuitem', { name: 'Editar' }).click();
-//   await page.getByRole('textbox', { name: 'Título' }).fill('Nueva tarea modificada');
-//   await page.getByRole('button', { name: 'Actualizar' }).click();
-//   await page.locator('div:nth-child(2) > div > .peer').click();
-//   await page.locator('div:nth-child(4) > div > .peer').click();
-//   await page.locator('[id="radix-«r30»"]').click();
-//   await page.getByRole('menuitem', { name: 'Eliminar' }).click();
-//   await page.locator('div').filter({ hasText: 'Tareas4/' }).getByRole('button').click();
-//   await page.getByRole('menuitem', { name: 'Completadas' }).click();
-//   await page.locator('div').filter({ hasText: 'Tareas4/' }).getByRole('button').click();
-//   await page.getByRole('menuitem', { name: 'Incompletas' }).click();
-//   await page.locator('div').filter({ hasText: 'Tareas0/' }).getByRole('button').click();
