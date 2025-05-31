@@ -20,12 +20,14 @@ import { CreateTask, createTaskSchema } from "@/schemas/tasks";
 import { taskQueryOptions } from "../api/queries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 interface TasksFormProps {
   taskId?: string;
 }
 
 export function TasksForm({ taskId }: TasksFormProps) {
+  const titleRef = useRef<HTMLInputElement>(null);
   const { mutate: createTask, isPending: isCreating } = useCreateTask();
   const { mutate: updateTask, isPending: isUpdating } = useUpdateTask();
   const { data: task } = useSuspenseQuery(taskQueryOptions(taskId));
@@ -45,6 +47,12 @@ export function TasksForm({ taskId }: TasksFormProps) {
           completed: false,
         },
   });
+
+  useEffect(() => {
+    if (titleRef.current) {
+      titleRef.current.focus();
+    }
+  }, []);
 
   // To reuse from, the condition to know if its edit or create is when the taskId is provided
   const onSubmit: SubmitHandler<CreateTask> = (data) => {
@@ -69,6 +77,7 @@ export function TasksForm({ taskId }: TasksFormProps) {
         onSuccess: () => {
           toast.success("Tarea creada correctamente");
           form.reset();
+          titleRef.current?.focus();
         },
       });
     }
@@ -87,7 +96,7 @@ export function TasksForm({ taskId }: TasksFormProps) {
             <FormItem>
               <FormLabel>Título</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} ref={titleRef} />
               </FormControl>
               <FormMessage />
             </FormItem>

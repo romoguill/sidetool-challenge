@@ -7,7 +7,6 @@ export const tasksQueryOptions = (filter: TaskFilter) =>
   queryOptions({
     queryKey: tasksKeys.list(filter),
     queryFn: async () => {
-      console.log(tasksKeys.list(filter));
       const response = await apiClient.tasks.$get({
         query: filter,
       });

@@ -82,7 +82,10 @@ body {
 }
 
 body {
-  background-color: var(--background);
+  background-color: rgba(0, 0, 0);
+}
+
+.noise {
   background:
     linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
     url("/tactile_noise.webp") repeat;

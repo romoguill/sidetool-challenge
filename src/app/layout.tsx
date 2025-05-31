@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="pt-32 antialiased">
+      <body className="noise antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>
