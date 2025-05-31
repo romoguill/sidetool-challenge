@@ -1,18 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
-  DropdownMenuTrigger,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import { TaskDTO } from "@/schemas/tasks";
 import { EditIcon, MoreHorizontalIcon, TrashIcon } from "lucide-react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { useDeleteTask, useUpdateTask } from "../api/mutations";
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "../../../lib/utils";
 
 interface TaskItemProps {
   task: TaskDTO;
@@ -23,11 +24,22 @@ export function TaskItem({ task }: TaskItemProps) {
   const { mutate: updateTask } = useUpdateTask();
 
   return (
-    <div
+    <motion.div
       className={cn(
         "bg-background/30 flex flex-col justify-between rounded-md border p-4",
         task.completed && "stripes",
       )}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      exit={{
+        opacity: 0,
+        x: task.completed ? 30 : -30,
+        backgroundColor: task.completed
+          ? "rgba(84, 163, 70, 0.7)"
+          : "rgba(176, 48, 48, 0.7)",
+      }}
+      layout
     >
       <div className="flex items-center">
         <Checkbox
@@ -60,6 +72,7 @@ export function TaskItem({ task }: TaskItemProps) {
               </DropdownMenuItem>
               <DropdownMenuItem
                 variant="destructive"
+                className="font-semibold"
                 onClick={() => deleteTask(task.id.toString())}
               >
                 <TrashIcon className="h-4 w-4 stroke-red-500" />
@@ -70,6 +83,6 @@ export function TaskItem({ task }: TaskItemProps) {
         </div>
       </div>
       <p className="text-muted-foreground ml-9 text-sm">{task.description}</p>
-    </div>
+    </motion.div>
   );
 }

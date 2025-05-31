@@ -51,11 +51,11 @@
   --popover-foreground: oklch(0.9807 0.011 303.12);
   --primary: oklch(0.7516 0.127791 200.6058);
   --primary-foreground: oklch(0.3237 0.0082 255.56);
-  --secondary: oklch(0.97 0 0);
+  --secondary: oklch(0.4325 0.0504 242.05);
   --secondary-foreground: oklch(0.7516 0.127791 200.6058);
-  --muted: oklch(0.97 0 0);
+  --muted: oklch(0.4325 0.0504 242.05);
   --muted-foreground: oklch(0.743 0.0258 293.41);
-  --accent: oklch(0.97 0 0);
+  --accent: oklch(0.4325 0.0504 242.05);
   --accent-foreground: oklch(0.7516 0.127791 200.6058);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.447 0.0171 238.37);
@@ -70,7 +70,7 @@
   --sidebar-foreground: oklch(0.9807 0.011 303.12);
   --sidebar-primary: oklch(0.7516 0.127791 200.6058);
   --sidebar-primary-foreground: oklch(0.3237 0.0082 255.56);
-  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent: oklch(0.4325 0.0504 242.05);
   --sidebar-accent-foreground: oklch(0.7516 0.127791 200.6058);
   --sidebar-border: oklch(0.447 0.0171 238.37);
   --sidebar-ring: oklch(0.708 0 0);
@@ -82,19 +82,19 @@ body {
 }
 
 body {
+  background-color: var(--background);
   background:
     linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
     url("/tactile_noise.webp") repeat;
 }
 
 .stripes {
-  background-color: var(--background);
   background: repeating-linear-gradient(
     45deg,
     color-mix(in oklch, var(--background) 20%, transparent) 0px,
     color-mix(in oklch, var(--background) 20%, transparent) 10px,
-    color-mix(in oklch, var(--accent) 10%, transparent) 10px,
-    color-mix(in oklch, var(--accent) 10%, transparent) 20px
+    color-mix(in oklch, var(--accent) 50%, transparent) 10px,
+    color-mix(in oklch, var(--accent) 50%, transparent) 20px
   );
 }
 

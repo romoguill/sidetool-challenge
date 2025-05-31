@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { Filter } from "./filter";
 import { useState } from "react";
 import { TaskFilter } from "@/schemas/queries";
+import { AnimatePresence } from "motion/react";
 
 export function TasksList() {
   // Filter will be set by the dropdown and trigger a query refetch
@@ -40,9 +41,11 @@ export function TasksList() {
       </div>
 
       <div className="space-y-4">
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
+        <AnimatePresence mode="popLayout">
+          {tasks.map((task) => (
+            <TaskItem key={task.id} task={task} />
+          ))}
+        </AnimatePresence>
       </div>
     </section>
   );
