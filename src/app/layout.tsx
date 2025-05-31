@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import Providers from '../providers/providers';
+import type { Metadata } from "next";
+import "./globals.css";
+import Providers from "../providers/providers";
 
 export const metadata: Metadata = {
-  title: 'Sidetool - Tasks Management App',
-  description: 'App made for Sidetool dev challenge',
+  title: "Sidetool - Tasks Management App",
+  description: "App made for Sidetool dev challenge",
 };
 
 export default function RootLayout({
@@ -13,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className='antialiased'>
+    <html lang="en">
+      <body className="pt-32 antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>
