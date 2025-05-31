@@ -24,8 +24,14 @@ export function TasksList() {
   return (
     <section className="mx-auto w-full border-none py-30 sm:max-w-xl md:max-w-xl lg:max-w-2xl">
       <div className="bg-background/30 mb-6 flex w-full items-center rounded-sm border p-4">
-        <h1 className="text-2xl font-bold">Tareas</h1>
-        <span className="ml-10 text-3xl font-bold">{`${completedTasks}/${totalTasks}`}</span>
+        <div className="flex flex-col gap-3">
+          <h1 className="text-sm italic">Task Manager App</h1>
+          <h2 className="text-2xl font-bold">
+            Tareas
+            <span className="text-muted-foreground mx-6">|</span>
+            <span className="font-bold">{`${completedTasks}/${totalTasks}`}</span>
+          </h2>
+        </div>
 
         <Filter
           className="mr-2 ml-auto"
